@@ -61,6 +61,9 @@ public class Controller implements ActionListener {
             }
             break;
             case SEND_ACTION_COMMAND: {
+
+                int index = parent.getModel().getList().getAnchorSelectionIndex();
+
                 ChatPanelView view = Utility.findParent(
                         (Component) e.getSource(), ChatPanelView.class);
                 parent.getModel().setLastMessageText(view.getTextMessageField().getText());

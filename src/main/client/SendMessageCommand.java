@@ -55,11 +55,16 @@ public class SendMessageCommand implements Command {
                 DocumentBuilder builder = factory.newDocumentBuilder();
                 Document document = builder.newDocument();
 
-                List<Message> message = new ArrayList<>(); //TODO
+                List<Message> message = new ArrayList<>();
+
+                if( app.getModel().getList().isSelectionEmpty()){
+    //создать окошко "выберите получателя" TODO
+                }
+                int index = app.getModel().getList().getAnchorSelectionIndex();
                 message.add(Message.newMessage()
                         .text(panel.getTextMessageField().getText())
                         .from(app.getModel().getLoggedUser())
-                        .to("") // TODO
+                        .to((String) app.getModel().getModelList().get(index)) // TODO
                         .moment(Calendar.getInstance())
                         .build());
 

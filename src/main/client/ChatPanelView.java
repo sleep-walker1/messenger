@@ -154,7 +154,9 @@ public class ChatPanelView extends AbstractView {
         if (usersListPanel == null) {
             usersListPanel = new JScrollPane(parent.getModel().getList());
             //usersListPanel.setPreferredSize(new Dimension(100, 100));
+            parent.getModel().getList().setSelectionMode(1);
             usersListPanel.setSize(getWidth()/2, getHeight()); //!
+            usersListPanel.setBackground(Color.YELLOW );
             usersListPanel
                     .setVerticalScrollBarPolicy(
                             ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
@@ -178,6 +180,7 @@ public class ChatPanelView extends AbstractView {
         if (messagesListPanel == null) {
             messagesListPanel = new JScrollPane(getMessagesTextPane());
             messagesListPanel.setSize(getMaximumSize());
+            messagesListPanel.setBackground(Color.YELLOW );
             messagesListPanel
                     .setVerticalScrollBarPolicy(
                             ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
