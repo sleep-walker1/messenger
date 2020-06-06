@@ -91,7 +91,7 @@ public class Utility {
                 if (messages.size() > 0)
                 {
                     model.addMessages(messages);
-                    //model.addUsers(messages);
+
                     model.setLastMessageId(id.longValue());
                     log.trace("List of new messages: " + messages.toString());
                 }

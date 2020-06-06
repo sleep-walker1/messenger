@@ -28,7 +28,7 @@ public class Message implements Serializable, Comparable <Message> {
     public String getUserFromMessage(){
         return new StringBuilder("")
                 .append(userFrom)
-                .append("<br/>")
+
                 .toString();
     }
 

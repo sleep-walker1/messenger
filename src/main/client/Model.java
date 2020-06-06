@@ -107,7 +107,10 @@ public class Model {
 
     public void addMessages(List<Message> messages) {
         for(int q=0;q<messages.size();q++){
-            getModelList().addElement(messages.get(q).getUserFromMessage());
+            String mes =messages.get(q).getUserFromMessage();
+            if(!listModel.contains(mes)){
+                listModel.addElement(mes);
+            }
         }
         getList();
         this.getMessages().addAll(messages);
