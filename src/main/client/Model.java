@@ -19,20 +19,18 @@ public class Model {
     private Set<Message> messages;
 
    private DefaultListModel<String> listModel = new DefaultListModel();
-    JList<String> UserList ;
+    JList<String> UserList = new JList<String>();
     //private List<Message> users;
     private String usersStr ="";
     private String serverIPAddress = "127.0.0.1";
 
     public void addLoginUser() {
-            listModel.addElement(loggedUser + "<br/>");
-        UserList = new JList<String>(listModel);
-        //UserList.add(loggedUser);
-        System.out.println(listModel.toString());
+
         if(loggedUser.length()!=0){
             if(!listModel.contains(loggedUser)){
-                listModel.addElement(loggedUser + "<br/>");
-                UserList = new JList(listModel);
+                listModel.addElement(loggedUser);
+                UserList.setModel(listModel);
+
             }
             /*
             if(usersStr.length()!=0){
@@ -44,11 +42,12 @@ public class Model {
 
         }
     }
-    public DefaultListModel getUsersList() {
+    public DefaultListModel getModelList() {
         return listModel;
     }
+
     public JList<String> getList() {
-        UserList = new JList(listModel);
+        UserList.setModel(listModel);
         return UserList;
     }
     public String getUserString() {
@@ -108,7 +107,7 @@ public class Model {
 
     public void addMessages(List<Message> messages) {
         for(int q=0;q<messages.size();q++){
-            getUsersList().addElement(messages.get(q).getUserFromMessage());
+            getModelList().addElement(messages.get(q).getUserFromMessage());
         }
         getList();
         this.getMessages().addAll(messages);

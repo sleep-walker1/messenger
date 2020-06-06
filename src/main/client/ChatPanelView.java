@@ -32,8 +32,7 @@ public class ChatPanelView extends AbstractView {
     private JButton sendMessageButton;
     private JTextField textMessageField;
     private JButton logoutButton;
-    private DefaultListModel<String> listModel;
-    JList userList ;
+
 
     private ChatPanelView() {
         super();
@@ -56,7 +55,8 @@ public class ChatPanelView extends AbstractView {
             } catch (BadLocationException | IOException e) {
                 log.error("Bad location error: " + e.getMessage());
             }
-
+            parent.getModel().getList();
+/*
             Reader stringReader = new StringReader(users);
             HTMLEditorKit htmlKit = new HTMLEditorKit();
             HTMLDocument doc2 = (HTMLDocument) htmlKit.createDefaultDocument();
@@ -66,10 +66,11 @@ public class ChatPanelView extends AbstractView {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+             getMessagesTextPane().setCaretPosition(document.getLength());
+*/
 
-            getMessagesTextPane().setCaretPosition(document.getLength());
-
-            getUsersPane().setCaretPosition(doc2.getLength()); /////////TODO
+            //parent.getModel().getList().setModel(parent.getModel().getModelList());
+            //getUsersPane().setCaretPosition(doc2.getLength()); /////////TODO
             log.trace("Messages text update");
         }
     }
@@ -85,7 +86,6 @@ public class ChatPanelView extends AbstractView {
     }
 
 
-
     @Override
     public void initialize() {
         this.setName("chatPanelView");
@@ -94,14 +94,9 @@ public class ChatPanelView extends AbstractView {
         header.add(getPromptLabel(), BorderLayout.WEST); //слева
         header.add(getLogoutButton(), BorderLayout.EAST); //справа
         this.add(header, BorderLayout.NORTH);
-        this.add(getMessagesListPanel(), BorderLayout.EAST);
+        this.add(getMessagesListPanel(), BorderLayout.CENTER);
 
-        //userList = new JList();
-        JScrollPane northScroll = new JScrollPane(getUsersList());
-        northScroll.setPreferredSize(new Dimension(100, 100));
-        this.add(getUsersListPanel(), BorderLayout.CENTER);
-        //this.add(getUsersListPanel(), BorderLayout.WEST);
-
+        this.add(getUsersListPanel(), BorderLayout.WEST);
 
         this.add(getTextMessagePanel(), BorderLayout.SOUTH);
         InputMap im = getSendMessageButton().getInputMap();
@@ -120,7 +115,7 @@ public class ChatPanelView extends AbstractView {
         if (getMessages) {
             getMessagesTextPane().setText(parent.getModel().messagesToString());
             //getUsersPane().setText(parent.getModel().getUserString());
-            setUsersList(parent.getModel().getList());
+           // setUsersList(parent.getModel().getList());
             getUsersListPanel();
         }
         getPromptLabel().setText("Hello, " + parent.getModel().getLoggedUser() + "!");
@@ -128,15 +123,19 @@ public class ChatPanelView extends AbstractView {
         parent.getRootPane().setDefaultButton(getSendMessageButton());
     }
 
-    private void setUsersList(JList<String> userList) {
-        this.userList = userList;
-    }
+   // private void setUsersList(JList<String> userList) {
+    //    this.userList = userList;
+   // }
 
-    private JList<String> getUsersList() { //TODO
+   /* private JList<String> getUsersList() { //TODO
 
         if (listModel == null) {
             listModel = new DefaultListModel();
-
+            userList = new JList(); //TODO
+            listModel.addElement("hii");
+            userList.setModel(listModel);
+            userList.setLayoutOrientation(JList.HORIZONTAL_WRAP);
+            userList.setVisibleRowCount(0);
             //listModel = new DefaultListModel();
 
             //usersListPanel.setSize(getWidth()/2, getHeight()); //!
@@ -145,17 +144,16 @@ public class ChatPanelView extends AbstractView {
         }
         //userList = new JList(listModel);
 
-        char[] dat = parent.getModel().getUserString().toCharArray();
-        String[] data = new String[]{"jhjh"}; //TODO
-        userList = new JList(data); //TODO
-        userList.setLayoutOrientation(JList.HORIZONTAL_WRAP);
-        userList.setVisibleRowCount(0);
+        //char[] dat = parent.getModel().getUserString().toCharArray();
+        //String[] data = new String[]{"jhjh"}; //TODO
+
         return userList;
-    }
+    }*/
 
     private JScrollPane getUsersListPanel() { //TODO
         if (usersListPanel == null) {
-            usersListPanel = new JScrollPane(getUsersList());
+            usersListPanel = new JScrollPane(parent.getModel().getList());
+            //usersListPanel.setPreferredSize(new Dimension(100, 100));
             usersListPanel.setSize(getWidth()/2, getHeight()); //!
             usersListPanel
                     .setVerticalScrollBarPolicy(
