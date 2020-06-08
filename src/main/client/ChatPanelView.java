@@ -1,5 +1,6 @@
 package main.client;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -45,17 +46,23 @@ public class ChatPanelView extends AbstractView {
 
 
     public void modelChangedNotification(String newMessages, String users) {//TODO
+        System.out.println("12");
         if (newMessages.length() != 0) {
+            System.out.println("22");
             log.trace("New messages arrived: " + newMessages);
             HTMLDocument document = (HTMLDocument) getMessagesTextPane().getStyledDocument();
                         Element element = document.getElement(document.getRootElements()[0],
                     HTML.Attribute.ID, "body");
             try {
                 document.insertBeforeEnd(element, newMessages);
+
             } catch (BadLocationException | IOException e) {
                 log.error("Bad location error: " + e.getMessage());
+                System.out.println("333");
             }
+            getMessagesTextPane().setCaretPosition(document.getLength());
             parent.getModel().getList();
+            //parent.getModel().filterMessagesOfCurrentUser();
 /*
             Reader stringReader = new StringReader(users);
             HTMLEditorKit htmlKit = new HTMLEditorKit();
@@ -66,10 +73,8 @@ public class ChatPanelView extends AbstractView {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-             getMessagesTextPane().setCaretPosition(document.getLength());
-*/
 
-            //parent.getModel().getList().setModel(parent.getModel().getModelList());
+*/
             //getUsersPane().setCaretPosition(doc2.getLength()); /////////TODO
             log.trace("Messages text update");
         }
@@ -91,6 +96,7 @@ public class ChatPanelView extends AbstractView {
         this.setName("chatPanelView");
         this.setLayout(new BorderLayout());
         JPanel header = new JPanel(new BorderLayout());
+
         header.add(getPromptLabel(), BorderLayout.WEST); //слева
         header.add(getLogoutButton(), BorderLayout.EAST); //справа
         this.add(header, BorderLayout.NORTH);
@@ -113,13 +119,18 @@ public class ChatPanelView extends AbstractView {
     public void initModel(boolean getMessages) {
         parent.getModel().setLastMessageText("");
         if (getMessages) {
-            getMessagesTextPane().setText(parent.getModel().messagesToString());
+            parent.getModel().filterMessagesOfCurrentUser();
+            //System.out.println(parent.getModel().messagesOfLoggedUser);
+            //getMessagesTextPane().setText(parent.getModel().messagesToString()); //filteredMessagesToString
+            getMessagesTextPane().setText(parent.getModel().filteredMessagesToString());
+
             //getUsersPane().setText(parent.getModel().getUserString());
            // setUsersList(parent.getModel().getList());
             getUsersListPanel();
         }
         getPromptLabel().setText("Hello, " + parent.getModel().getLoggedUser() + "!");
         getTextMessageField().requestFocusInWindow();
+        getSendMessageButton().setBackground(Color.ORANGE );
         parent.getRootPane().setDefaultButton(getSendMessageButton());
     }
 
@@ -156,7 +167,8 @@ public class ChatPanelView extends AbstractView {
             //usersListPanel.setPreferredSize(new Dimension(100, 100));
             parent.getModel().getList().setSelectionMode(1);
             usersListPanel.setSize(getWidth()/2, getHeight()); //!
-            usersListPanel.setBackground(Color.YELLOW );
+            Color bl = new Color(130,193, 237);
+            parent.getModel().getList().setBackground(bl );
             usersListPanel
                     .setVerticalScrollBarPolicy(
                             ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
@@ -180,7 +192,7 @@ public class ChatPanelView extends AbstractView {
         if (messagesListPanel == null) {
             messagesListPanel = new JScrollPane(getMessagesTextPane());
             messagesListPanel.setSize(getMaximumSize());
-            messagesListPanel.setBackground(Color.YELLOW );
+
             messagesListPanel
                     .setVerticalScrollBarPolicy(
                             ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
@@ -194,6 +206,8 @@ public class ChatPanelView extends AbstractView {
             messagesTextPane.setContentType("text/html");
             messagesTextPane.setEditable(false);
             messagesTextPane.setName("messagesTextArea");
+            Color lightblue = new Color(150,228, 204);
+            messagesTextPane.setBackground(lightblue);
             ((DefaultCaret) messagesTextPane.getCaret())
                     .setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
 

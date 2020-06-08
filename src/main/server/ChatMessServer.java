@@ -23,12 +23,16 @@ import java.nio.file.Paths;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
-@Slf4j
+import static com.sun.deploy.cache.Cache.exists;
+
+//@Slf4j
 public class ChatMessServer {
     final static Logger log = LogManager.getLogger(ChatMessServer.class);
     public static final int PORT = 7070;
     private static final int SERVER_TIMEOUT = 500;
     private static final String XML_FILE_NAME = "messages.xml";//?
+    private static String FILE_NAME= "0.xml";
+   // private  String FILE_NAME ;
     private static volatile boolean stop = false;
     private static AtomicInteger id = new AtomicInteger(0);
     private static Map<Long, Message> messagesList =
@@ -59,19 +63,34 @@ public class ChatMessServer {
                     log.error("IO error");
                     socket.close();
                 }
-            } catch (SocketTimeoutException e) { //
+            } catch (SocketTimeoutException e) {
             }
-            //saveMessagesXMLFile();   //!!!!
         }
 
-        // Write messange into xml file
+        // Write message into xml file
         saveMessagesXMLFile();
         log.info("Server stopped");
         serverSocket.close();
     }
 
     private static void saveMessagesXMLFile() throws ParserConfigurationException, IOException { //TODO
-       //System.out.println("Hello world!");
+
+/*
+        OutputStream stream  = new FileOutputStream(new File(XML_FILE_NAME)); //логины двух пользователей
+        OutputStreamWriter out = new OutputStreamWriter(stream, StandardCharsets.UTF_8);
+
+        for(int i =0; i< messagesList.size();i++){
+            FILE_NAME = messagesList.get(i).getUserFrom() + " " + messagesList.get(i).getUserTo() + ".xml";
+            if(new File(FILE_NAME).exists()){
+                 stream  = new FileOutputStream(FILE_NAME); //логины двух пользователей
+
+            } else{
+                 stream  = new FileOutputStream(new File(FILE_NAME)); //логины двух пользователей
+            }
+
+            out = new OutputStreamWriter(stream, StandardCharsets.UTF_8);
+            out.write(xmlContent + "\n");
+        }*/
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         DocumentBuilder builder = factory.newDocumentBuilder();
         Document document = builder.newDocument();
@@ -91,6 +110,8 @@ public class ChatMessServer {
         List<Message> messages = new ArrayList<>();
         MessageParser saxp = new MessageParser(id, messages);
         //InputStream is = new ByteArrayInputStream(Files.readAllBytes(Paths.get(XML_FILE_NAME)));
+        //Path s= Paths.get("C://Users//Юлия//ProjectsJava//Messenger//files");
+
         Path str = (Paths.get(XML_FILE_NAME)).toAbsolutePath();
         InputStream is = new ByteArrayInputStream(
                 Files.readAllBytes(str));

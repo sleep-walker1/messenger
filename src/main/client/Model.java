@@ -16,7 +16,8 @@ public class Model {
     private String loggedUser;
     private String lastMessageText;
     private long lastMessageId;
-    private Set<Message> messages;
+    private Set<Message> allMessages;
+    public Set<Message> messagesOfLoggedUser = new TreeSet<>();
 
    private DefaultListModel<String> listModel = new DefaultListModel();
     JList<String> UserList = new JList<String>();
@@ -32,14 +33,6 @@ public class Model {
                 UserList.setModel(listModel);
 
             }
-            /*
-            if(usersStr.length()!=0){
-                if (!usersStr.contains(loggedUser)){
-                    usersStr += loggedUser + "<br/>";
-                }
-            } else usersStr += loggedUser + "<br/>";
-            */
-
         }
     }
     public DefaultListModel getModelList() {
@@ -52,6 +45,17 @@ public class Model {
     }
     public String getUserString() {
         return usersStr;
+    }
+
+    public void filterMessagesOfCurrentUser() {
+        for (Message one : allMessages) {
+            //System.out.println(one.getUserTo());
+            //.out.println(one.getUserFrom());
+            if((one.getUserTo().equals(loggedUser)  || (one.getUserFrom().equals(loggedUser))) ){
+                messagesOfLoggedUser.add(one);
+                System.out.println("added");
+            }
+        }
     }
 /*
     public void setUsers(String usersStr) {
@@ -66,11 +70,18 @@ public class Model {
         return ModelHolder.INSTANCE;
     }
 
-    public void init(){
+    public String msToString( Set<Message> s){
+        StringBuilder result = new StringBuilder("<html><body id ='body'>");
+        for (Message one : s) {
+            result.append(one.toString()).append("\n");
+        }
 
+        return result.append("</body></html>").toString();
     }
-    public void initialize() { //проходит по всем сообщениям
-        setMessages(new TreeSet<Message>(){
+
+    public void initialize() { //проходит по всем сообщениям  TODO
+
+       setAllMessages(new TreeSet<Message>(){
             @Override
             public String toString() {
                 StringBuilder result = new StringBuilder("<html><body id ='body'>");
@@ -84,17 +95,23 @@ public class Model {
                 return result.append("</body></html>").toString();
             }
         });
+
         lastMessageId = 0L;
         currentUser = "";
         loggedUser = "";
         usersStr ="";
-        //listModel = new DefaultListModel();
+       messagesOfLoggedUser = new TreeSet<Message>();
     }
 
     private Model(){  }
 
     public String messagesToString() {
-        return messages.toString();
+        return msToString(allMessages);
+        //return allMessages.toString();
+    }
+    public String filteredMessagesToString() {
+       return msToString(messagesOfLoggedUser);
+        //return messagesOfLoggedUser.toString();
     }
 
     public long getLastMessageId() {
@@ -113,9 +130,13 @@ public class Model {
             }
         }
         getList();
-        this.getMessages().addAll(messages);
+        this.getAllMessages().addAll(messages);
+
+
+
         parent.getChatPanelView(false)
                 .modelChangedNotification(messages.toString(), getList().toString());
+               // .modelChangedNotification(messagesOfLoggedUser.toString(), getList().toString());
        /*
         String u = "";
         for(int q=0;q<messages.size();q++){
@@ -126,7 +147,9 @@ public class Model {
         parent.getChatPanelView(false)
             .modelChangedNotification(messages.toString(), usersStr);*/
     }
-
+    public void setFilteredMessages(Set<Message> Messages) {
+        this.messagesOfLoggedUser = Messages;
+    }
 
     public ChatMessengerApp getParent() {
         return parent;
@@ -152,11 +175,11 @@ public class Model {
     public void setLastMessageText(String lastMessageText) {
         this.lastMessageText = lastMessageText;
     }
-    public Set<Message> getMessages() {
-        return messages;
+    public Set<Message> getAllMessages() {
+        return allMessages;
     }
-    public void setMessages(Set<Message> messages) {
-        this.messages = messages;
+    public void setAllMessages(Set<Message> allMessages) {
+        this.allMessages = allMessages;
     }
     public String getServerIPAddress() { return serverIPAddress; }
     public void setServerIPAddress(String serverIPAddress) { this.serverIPAddress = serverIPAddress;}

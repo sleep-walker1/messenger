@@ -15,7 +15,7 @@ import static main.client.ChatPanelView.LOGOUT_ACTION_COMMAND;
 import static main.client.LoginPanelView.ACTION_COMMAND_LOGIN;
 import static main.client.ChatPanelView.SEND_ACTION_COMMAND;
 
-@Slf4j //тута команды
+//@Slf4j //тута команды
 public class Controller implements ActionListener {
     final static Logger log = LogManager.getLogger(Controller.class);
     private ChatMessengerApp parent;
@@ -39,6 +39,7 @@ public class Controller implements ActionListener {
         } catch (ParseException parseEx) {
             log.error(parseEx.getMessage());
         }
+
         command.execute();
     }
 
@@ -55,19 +56,25 @@ public class Controller implements ActionListener {
                     parent.getModel().setCurrentUser(view.getUserNameField().getText());
                     parent.getModel().setServerIPAddress(view.getServerIpAddressField().getText());
                     parent.getModel().setLoggedUser(view.getUserNameField().getText());
+
                     parent.getModel().addLoginUser();
+                    //parent.getModel().filterMessagesOfCurrentUser();
+
+
                     command = new ShowChatViewCommand(parent, view);
                 }
             }
             break;
             case SEND_ACTION_COMMAND: {
 
-                int index = parent.getModel().getList().getAnchorSelectionIndex();
+               // int index = parent.getModel().getList().getAnchorSelectionIndex();
 
                 ChatPanelView view = Utility.findParent(
                         (Component) e.getSource(), ChatPanelView.class);
                 parent.getModel().setLastMessageText(view.getTextMessageField().getText());
                 command = new SendMessageCommand(parent, view);
+               // parent.getModel().filterMessagesOfCurrentUser();
+
             }
             break;
             case LOGOUT_ACTION_COMMAND: {

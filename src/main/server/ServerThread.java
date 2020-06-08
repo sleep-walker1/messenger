@@ -21,17 +21,17 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
 
-@Slf4j
+//@Slf4j
 public class ServerThread extends  Thread{
     final static Logger log = LogManager.getLogger(ServerThread.class);
     public static final String METHOD_GET = "GET";
     public static final String METHOD_PUT = "PUT";
     public static final String END_LINE_MESSAGE = "END";
     private final Socket socket;
-    private final AtomicInteger messageid;
+    private final AtomicInteger messageId;
 
-    public AtomicInteger getMessageid() {
-        return messageid;
+    public AtomicInteger getMessageId() {
+        return messageId;
     }
 
     public Map<Long, Message> getMessagesList() {
@@ -45,7 +45,7 @@ public class ServerThread extends  Thread{
 
     public ServerThread(Socket socket, AtomicInteger messageId, Map<Long, Message> messagesList) throws IOException {
         this.socket = socket;
-        this.messageid = messageId;
+        this.messageId = messageId;
         this.messagesList = messagesList;
         in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
         out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(socket.getOutputStream())), true);
@@ -94,7 +94,7 @@ public class ServerThread extends  Thread{
                     SAXParserFactory saxParserFactory = SAXParserFactory.newInstance();
                     SAXParser parser = saxParserFactory.newSAXParser();
                     List<Message> messages = new ArrayList<>();
-                    MessageParser saxp = new MessageParser(messageid, messages);
+                    MessageParser saxp = new MessageParser(messageId, messages);
 
                     InputStream is = new ByteArrayInputStream(mesStr.toString().getBytes());
                     parser.parse(is,saxp);

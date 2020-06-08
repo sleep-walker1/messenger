@@ -27,9 +27,9 @@ import static main.server.ServerThread.END_LINE_MESSAGE;
 import static main.server.ServerThread.METHOD_GET;
 
 
-@Slf4j
+//@Slf4j
 public class Utility {
-    final static Logger log = LogManager.getLogger(Utility.class);
+   final static Logger log = LogManager.getLogger(Utility.class);
 
     public static <T extends Container> T findParent(Component comp, Class<T> clazz) {
         if (comp == null) {
@@ -90,6 +90,7 @@ public class Utility {
 
                 if (messages.size() > 0)
                 {
+                    System.out.println("11");
                     model.addMessages(messages);
 
                     model.setLastMessageId(id.longValue());

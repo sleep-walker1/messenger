@@ -19,7 +19,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-@Slf4j
+//@Slf4j
 public class SendMessageCommand implements Command {
     final static Logger log = LogManager.getLogger(SendMessageCommand.class);
     private ChatMessengerApp app;
@@ -64,7 +64,7 @@ public class SendMessageCommand implements Command {
                 message.add(Message.newMessage()
                         .text(panel.getTextMessageField().getText())
                         .from(app.getModel().getLoggedUser())
-                        .to((String) app.getModel().getModelList().get(index)) // TODO
+                        .to((String) app.getModel().getModelList().get(index))
                         .moment(Calendar.getInstance())
                         .build());
 
