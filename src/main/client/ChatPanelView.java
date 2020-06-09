@@ -108,6 +108,8 @@ public class ChatPanelView extends AbstractView {
         InputMap im = getSendMessageButton().getInputMap();
         im.put(KeyStroke.getKeyStroke("ENTER"), "pressed");
         im.put(KeyStroke.getKeyStroke("released ENTER"), "released");
+
+
     }
 
     @Override
@@ -132,6 +134,10 @@ public class ChatPanelView extends AbstractView {
         getTextMessageField().requestFocusInWindow();
         getSendMessageButton().setBackground(Color.ORANGE );
         parent.getRootPane().setDefaultButton(getSendMessageButton());
+
+        //TODO
+        parent.getModel().listSelectionModel.addListSelectionListener(
+                new SharedListSelectionHandler(parent, this));
     }
 
    // private void setUsersList(JList<String> userList) {

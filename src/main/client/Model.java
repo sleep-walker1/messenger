@@ -3,11 +3,14 @@ package main.client;
 import main.domain.Message;
 
 import javax.swing.*;
+import java.awt.event.ActionListener;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 import javax.swing.DefaultListModel;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 
 public class Model {
@@ -18,10 +21,13 @@ public class Model {
     private long lastMessageId;
     private Set<Message> allMessages;
     public Set<Message> messagesOfLoggedUser = new TreeSet<>();
+    public Set<Message> dialogMessages = new TreeSet<>();
 
    private DefaultListModel<String> listModel = new DefaultListModel();
     JList<String> UserList = new JList<String>();
-    //private List<Message> users;
+
+    ListSelectionModel listSelectionModel = UserList.getSelectionModel();
+
     private String usersStr ="";
     private String serverIPAddress = "127.0.0.1";
 
@@ -57,6 +63,18 @@ public class Model {
             }
         }
     }
+    public void filterMessagesOfDialog() {
+        int index = getList().getAnchorSelectionIndex();
+        for (Message one : messagesOfLoggedUser) {
+            //System.out.println(one.getUserTo());
+            //.out.println(one.getUserFrom());
+            if((one.getUserTo().equals(listModel.get(index))  || (one.getUserFrom().equals(listModel.get(index)))) ){
+                dialogMessages.add(one);
+                System.out.println("added");
+            }
+        }
+    }
+
 /*
     public void setUsers(String usersStr) {
         this.usersStr = usersStr;
@@ -96,6 +114,8 @@ public class Model {
             }
         });
 
+       // UserList.addListSelectionListener(lis );
+
         lastMessageId = 0L;
         currentUser = "";
         loggedUser = "";
@@ -111,7 +131,10 @@ public class Model {
     }
     public String filteredMessagesToString() {
        return msToString(messagesOfLoggedUser);
-        //return messagesOfLoggedUser.toString();
+    }
+
+    public String dialogMessagesToString() {
+        return msToString(dialogMessages);
     }
 
     public long getLastMessageId() {
