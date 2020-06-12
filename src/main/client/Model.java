@@ -1,5 +1,6 @@
 package main.client;
 
+import main.AbstractModel;
 import main.domain.Message;
 
 import javax.swing.*;
@@ -13,7 +14,7 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 
-public class Model {
+public class Model extends AbstractModel {
     private ChatMessengerApp parent;
     private String currentUser;
     private String loggedUser;
@@ -28,7 +29,6 @@ public class Model {
 
     ListSelectionModel listSelectionModel = UserList.getSelectionModel();
 
-    private String usersStr ="";
     private String serverIPAddress = "127.0.0.1";
 
     public void addLoginUser() {
@@ -45,18 +45,13 @@ public class Model {
         return listModel;
     }
 
-    public JList<String> getList() {
+    public JList<String> getList( ) {
         UserList.setModel(listModel);
         return UserList;
-    }
-    public String getUserString() {
-        return usersStr;
     }
 
     public void filterMessagesOfCurrentUser() {
         for (Message one : allMessages) {
-            //System.out.println(one.getUserTo());
-            //.out.println(one.getUserFrom());
             if((one.getUserTo().equals(loggedUser)  || (one.getUserFrom().equals(loggedUser))) ){
                 messagesOfLoggedUser.add(one);
                 System.out.println("added");
@@ -66,19 +61,12 @@ public class Model {
     public void filterMessagesOfDialog() {
         int index = getList().getAnchorSelectionIndex();
         for (Message one : messagesOfLoggedUser) {
-            //System.out.println(one.getUserTo());
-            //.out.println(one.getUserFrom());
             if((one.getUserTo().equals(listModel.get(index))  || (one.getUserFrom().equals(listModel.get(index)))) ){
                 dialogMessages.add(one);
                 System.out.println("added");
             }
         }
     }
-
-/*
-    public void setUsers(String usersStr) {
-        this.usersStr = usersStr;
-    }*/
 
     private static class ModelHolder {
         private static final Model INSTANCE = new Model();
@@ -88,14 +76,6 @@ public class Model {
         return ModelHolder.INSTANCE;
     }
 
-    public String msToString( Set<Message> s){
-        StringBuilder result = new StringBuilder("<html><body id ='body'>");
-        for (Message one : s) {
-            result.append(one.toString()).append("\n");
-        }
-
-        return result.append("</body></html>").toString();
-    }
 
     public void initialize() { //проходит по всем сообщениям  TODO
 
@@ -107,19 +87,15 @@ public class Model {
                 while (i.hasNext()) {
                     Message m =i.next();
                     result.append(m.toString()).append("\n");
-                    //usersStr = usersStr + m.getUsers();
                 }
 
                 return result.append("</body></html>").toString();
             }
         });
 
-       // UserList.addListSelectionListener(lis );
-
         lastMessageId = 0L;
         currentUser = "";
         loggedUser = "";
-        usersStr ="";
        messagesOfLoggedUser = new TreeSet<Message>();
     }
 
@@ -127,7 +103,6 @@ public class Model {
 
     public String messagesToString() {
         return msToString(allMessages);
-        //return allMessages.toString();
     }
     public String filteredMessagesToString() {
        return msToString(messagesOfLoggedUser);
@@ -145,6 +120,7 @@ public class Model {
         this.lastMessageId = lastMessageId;
     }
 
+
     public void addMessages(List<Message> messages) {
         for(int q=0;q<messages.size();q++){
             String mes =messages.get(q).getUserFromMessage();
@@ -155,20 +131,9 @@ public class Model {
         getList();
         this.getAllMessages().addAll(messages);
 
-
-
         parent.getChatPanelView(false)
                 .modelChangedNotification(messages.toString(), getList().toString());
-               // .modelChangedNotification(messagesOfLoggedUser.toString(), getList().toString());
-       /*
-        String u = "";
-        for(int q=0;q<messages.size();q++){
-            u+=messages.get(q).getUsers();
-        }
-        usersStr+=u;
-        this.getMessages().addAll(messages);
-        parent.getChatPanelView(false)
-            .modelChangedNotification(messages.toString(), usersStr);*/
+
     }
     public void setFilteredMessages(Set<Message> Messages) {
         this.messagesOfLoggedUser = Messages;

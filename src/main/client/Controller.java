@@ -6,20 +6,25 @@ import org.apache.commons.validator.routines.InetAddressValidator;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.ParseException;
+import java.util.TreeSet;
 
 import static main.client.ChatPanelView.LOGOUT_ACTION_COMMAND;
 import static main.client.LoginPanelView.ACTION_COMMAND_LOGIN;
 import static main.client.ChatPanelView.SEND_ACTION_COMMAND;
 
 //@Slf4j //тута команды
-public class Controller implements ActionListener {
+public class Controller implements ActionListener, ListSelectionListener {
     final static Logger log = LogManager.getLogger(Controller.class);
     private ChatMessengerApp parent;
     private Command command;
+
 
     private Controller() {
     }
@@ -27,6 +32,7 @@ public class Controller implements ActionListener {
     public static Controller getInstance() {
         return ControllerHolder.INSTANCE;
     }
+
 
     private static class ControllerHolder {
         private static final Controller INSTANCE = new Controller();
@@ -39,8 +45,16 @@ public class Controller implements ActionListener {
         } catch (ParseException parseEx) {
             log.error(parseEx.getMessage());
         }
-
         command.execute();
+    }
+
+    public void valueChanged(ListSelectionEvent e) {
+        ListSelectionModel lsm = (ListSelectionModel)e.getSource();
+        ChatPanelView view = ChatPanelView.getInstance();
+        if (!lsm.isSelectionEmpty()) {
+            command = new ShowDialogCommand(parent, view);
+            command.execute();
+        }
     }
 
     private void action(ActionEvent e) throws ParseException {
@@ -58,8 +72,6 @@ public class Controller implements ActionListener {
                     parent.getModel().setLoggedUser(view.getUserNameField().getText());
 
                     parent.getModel().addLoginUser();
-                    //parent.getModel().filterMessagesOfCurrentUser();
-
 
                     command = new ShowChatViewCommand(parent, view);
                 }
@@ -67,17 +79,14 @@ public class Controller implements ActionListener {
             break;
             case SEND_ACTION_COMMAND: {
 
-               // int index = parent.getModel().getList().getAnchorSelectionIndex();
-
                 ChatPanelView view = Utility.findParent(
                         (Component) e.getSource(), ChatPanelView.class);
                 parent.getModel().setLastMessageText(view.getTextMessageField().getText());
                 command = new SendMessageCommand(parent, view);
-               // parent.getModel().filterMessagesOfCurrentUser();
-
             }
             break;
             case LOGOUT_ACTION_COMMAND: {
+
                 ChatPanelView view = Utility.findParent(
                         (Component) e.getSource(), ChatPanelView.class);
                 parent.getModel().initialize();

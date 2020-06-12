@@ -4,8 +4,6 @@ import lombok.extern.slf4j.Slf4j;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionListener;
-import java.util.List;
 
 @Slf4j
 public class LoginPanelView extends AbstractView {
@@ -38,7 +36,7 @@ public class LoginPanelView extends AbstractView {
         this.setName("loginPanelView");
         this.setLayout(new BorderLayout());
         this.add(getLoginPanel(), BorderLayout.CENTER);
-        clearFiels();
+        clearFields();
         initModel();
         InputMap im = getLoginButton().getInputMap();
         im.put(KeyStroke.getKeyStroke("ENTER"), "pressed");
@@ -46,7 +44,7 @@ public class LoginPanelView extends AbstractView {
     }
 
     @Override
-    public void clearFiels() {
+    public void clearFields() {
         getErrorLabel().setVisible(false);
         getUserNameField().setText("");
         getServerIpAddressField().setText(parent.getModel().getServerIPAddress());

@@ -40,7 +40,12 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
   </component>
-  <component name="RunManager" selected="Application.ChatMessengerApp">
+  <component name="RecentsManager">
+    <key name="CreateClassDialog.RecentsKey">
+      <recent name="main.client" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Application.ChatMessServer">
     <configuration name="ChatMessServer" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="main.server.ChatMessServer" />
       <module name="JavaProject" />
@@ -81,9 +86,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.ChatMessengerApp" />
         <item itemvalue="Application.ChatMessServer" />
-        <item itemvalue="Application.ChatMessengerApp (1)" />
+        <item itemvalue="Application.ChatMessengerApp" />
       </list>
     </recent_temporary>
   </component>
@@ -126,30 +130,30 @@
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="275" y="0" width="816" height="728" key="#Intentions/0.0.1366.728@0.0.1366.728" timestamp="1591358699444" />
-    <state x="488" y="73" key="#com.intellij.ide.util.MemberChooser" timestamp="1591395784444">
+    <state x="488" y="73" key="#com.intellij.ide.util.MemberChooser" timestamp="1591815585148">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="488" y="73" key="#com.intellij.ide.util.MemberChooser/0.0.1366.728@0.0.1366.728" timestamp="1591395784444" />
+    <state x="488" y="73" key="#com.intellij.ide.util.MemberChooser/0.0.1366.728@0.0.1366.728" timestamp="1591815585148" />
     <state x="488" y="253" width="407" height="238" key="#com.intellij.refactoring.move.moveClassesOrPackages.MoveClassesOrPackagesDialog.classes" timestamp="1591125012443">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="488" y="253" width="407" height="238" key="#com.intellij.refactoring.move.moveClassesOrPackages.MoveClassesOrPackagesDialog.classes/0.0.1366.728@0.0.1366.728" timestamp="1591125012443" />
-    <state width="1323" height="98" key="GridCell.Tab.0.bottom" timestamp="1591735392485">
+    <state width="1323" height="98" key="GridCell.Tab.0.bottom" timestamp="1591897964205">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1323" height="98" key="GridCell.Tab.0.bottom/0.0.1366.728@0.0.1366.728" timestamp="1591735392485" />
-    <state width="1323" height="98" key="GridCell.Tab.0.center" timestamp="1591735392485">
+    <state width="1323" height="98" key="GridCell.Tab.0.bottom/0.0.1366.728@0.0.1366.728" timestamp="1591897964205" />
+    <state width="1323" height="98" key="GridCell.Tab.0.center" timestamp="1591897964205">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1323" height="98" key="GridCell.Tab.0.center/0.0.1366.728@0.0.1366.728" timestamp="1591735392485" />
-    <state width="1323" height="98" key="GridCell.Tab.0.left" timestamp="1591735392485">
+    <state width="1323" height="98" key="GridCell.Tab.0.center/0.0.1366.728@0.0.1366.728" timestamp="1591897964205" />
+    <state width="1323" height="98" key="GridCell.Tab.0.left" timestamp="1591897964205">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1323" height="98" key="GridCell.Tab.0.left/0.0.1366.728@0.0.1366.728" timestamp="1591735392485" />
-    <state width="1323" height="98" key="GridCell.Tab.0.right" timestamp="1591735392485">
+    <state width="1323" height="98" key="GridCell.Tab.0.left/0.0.1366.728@0.0.1366.728" timestamp="1591897964205" />
+    <state width="1323" height="98" key="GridCell.Tab.0.right" timestamp="1591897964205">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1323" height="98" key="GridCell.Tab.0.right/0.0.1366.728@0.0.1366.728" timestamp="1591735392485" />
+    <state width="1323" height="98" key="GridCell.Tab.0.right/0.0.1366.728@0.0.1366.728" timestamp="1591897964205" />
     <state width="1323" height="223" key="GridCell.Tab.1.bottom" timestamp="1591374301356">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
@@ -170,10 +174,10 @@
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="213" y="18" key="Maven.ArtifactSearchDialog/0.0.1366.728@0.0.1366.728" timestamp="1591728853148" />
-    <state x="378" y="187" key="com.intellij.ide.util.TipDialog" timestamp="1591722673429">
+    <state x="378" y="187" key="com.intellij.ide.util.TipDialog" timestamp="1591896940569">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="378" y="187" key="com.intellij.ide.util.TipDialog/0.0.1366.728@0.0.1366.728" timestamp="1591722673429" />
+    <state x="378" y="187" key="com.intellij.ide.util.TipDialog/0.0.1366.728@0.0.1366.728" timestamp="1591896940569" />
     <state x="413" y="119" key="extract.method.dialog" timestamp="1591110687197">
       <screen x="0" y="0" width="1366" height="728" />
     </state>

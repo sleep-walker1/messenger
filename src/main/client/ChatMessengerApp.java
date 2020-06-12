@@ -1,14 +1,11 @@
 package main.client;
 
-
 import lombok.extern.slf4j.Slf4j;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Timer;
 
 //@Slf4j
@@ -26,15 +23,6 @@ public class ChatMessengerApp extends JFrame {
 
     private static Timer timer;
 
-
-    /*
-    private List<String> users ;
-    public void userToList(){
-        if(!users.contains(getModel().getLoggedUser())){ //синглтон
-            users.add(getModel().getLoggedUser());
-            getModel().getUsers() +=  getModel().getLoggedUser();
-        }
-    }*/
 
     public static void main(String[] args) {
         JFrame frame = new ChatMessengerApp();
@@ -74,11 +62,10 @@ public class ChatMessengerApp extends JFrame {
         contentPanel.setLayout(new BorderLayout());
         contentPanel.add(getLoginPanel(), BorderLayout.CENTER);
         this.setContentPane(contentPanel);
-        //users = new ArrayList<>();
     }
 
     private JPanel getLoginPanel() {
-        LoginPanelView loginPanelView = VIEWS.getview("login"); //внизу полоска
+        LoginPanelView loginPanelView = VIEWS.getview("login");
         loginPanelView.initModel();
         return loginPanelView;
     }

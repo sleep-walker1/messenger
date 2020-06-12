@@ -1,5 +1,6 @@
 package main.server;
 
+import main.client.*;
 import main.domain.Message;
 import main.domain.xml.MessageBuilder;
 import main.domain.xml.MessageParser;
@@ -11,7 +12,9 @@ import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 
 
+import javax.swing.*;
 import javax.xml.parsers.*;
+import java.awt.*;
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -21,12 +24,55 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
+import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Collectors;
 
 import static com.sun.deploy.cache.Cache.exists;
 
 //@Slf4j
-public class ChatMessServer {
+
+public class ChatMessServer extends JFrame {
+
+    public ChatMessServer() {
+        super();
+        initialize();
+    }
+    private static final ServerPanelView view;
+    private static final ServerModel model;
+    public static final int WIDTH = 800;
+    public static final int HEIGHT = 600;
+    //private static final Controller CONTROLLER;
+    static {
+        model = ServerModel.getInstance(); //синглтон
+        //CONTROLLER = Controller.getInstance();
+
+        view = ServerPanelView.getInstance();
+
+    }
+
+    private void initialize() {
+        ServerPanelView.setParent(this);
+        model.setParent(this);
+        model.initialize();
+       // CONTROLLER.setParent(this);
+
+        this.setSize(WIDTH, HEIGHT);
+        this.setLocationRelativeTo(null);
+        this.setTitle("Server");
+
+        JPanel contentPanel = new JPanel();
+        contentPanel.setLayout(new BorderLayout());
+        contentPanel.add(getServerPanel(true), BorderLayout.CENTER);
+        this.setContentPane(contentPanel);
+    }
+
+    public ServerPanelView getServerPanel(boolean b) {
+        ServerPanelView ServerPanel = ServerPanelView.getInstance();
+        ServerPanel.initModel(b);
+        return ServerPanel;
+    }
+
     final static Logger log = LogManager.getLogger(ChatMessServer.class);
     public static final int PORT = 7070;
     private static final int SERVER_TIMEOUT = 500;
@@ -39,9 +85,15 @@ public class ChatMessServer {
             Collections.synchronizedSortedMap(new TreeMap<Long, Message>());
 
     public static void main(String[] args) throws IOException, ParserConfigurationException, SAXException {
+        JFrame fr = new ChatMessServer();
 
         // Load xml files with prev messages
         loadMessageXMLFile();
+
+        updMessages();
+        
+        fr.setVisible(true);
+        //fr.repaint();
 
         // Run thread with quit command handler
         quitCommandThread();
@@ -65,32 +117,30 @@ public class ChatMessServer {
                 }
             } catch (SocketTimeoutException e) {
             }
+            //updMessages();
         }
 
         // Write message into xml file
         saveMessagesXMLFile();
         log.info("Server stopped");
         serverSocket.close();
+        fr.dispose();
+    }
+
+    private static void updMessages() {
+
+        if (messagesList.size() > 0)
+        {
+            System.out.println("11");
+            model.addMessages(messagesList);
+
+            //model.setLastMessageId(id.longValue());
+            log.trace("List of new messages: " + messagesList.toString());
+        }
     }
 
     private static void saveMessagesXMLFile() throws ParserConfigurationException, IOException { //TODO
 
-/*
-        OutputStream stream  = new FileOutputStream(new File(XML_FILE_NAME)); //логины двух пользователей
-        OutputStreamWriter out = new OutputStreamWriter(stream, StandardCharsets.UTF_8);
-
-        for(int i =0; i< messagesList.size();i++){
-            FILE_NAME = messagesList.get(i).getUserFrom() + " " + messagesList.get(i).getUserTo() + ".xml";
-            if(new File(FILE_NAME).exists()){
-                 stream  = new FileOutputStream(FILE_NAME); //логины двух пользователей
-
-            } else{
-                 stream  = new FileOutputStream(new File(FILE_NAME)); //логины двух пользователей
-            }
-
-            out = new OutputStreamWriter(stream, StandardCharsets.UTF_8);
-            out.write(xmlContent + "\n");
-        }*/
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         DocumentBuilder builder = factory.newDocumentBuilder();
         Document document = builder.newDocument();
@@ -123,6 +173,7 @@ public class ChatMessServer {
         }
         id.incrementAndGet();
         is.close();
+
     }
 
     private static void quitCommandThread() {
@@ -149,4 +200,10 @@ public class ChatMessServer {
             }
         }.start();
     }
+
+    public static ServerModel getModel() {
+        return model;
+    }
+
+
 }

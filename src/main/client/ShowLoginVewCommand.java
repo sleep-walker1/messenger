@@ -11,7 +11,7 @@ public class ShowLoginVewCommand implements Command {
 
     @Override
     public void execute() {
-        panel.clearFiels();
+        panel.clearFields();
         panel.setVisible(false);
         app.getTimer().cancel();
         app.showLoginPanelView();

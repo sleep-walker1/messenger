@@ -15,7 +15,7 @@ public abstract class AbstractView extends JPanel {
     }
 
     public abstract void initialize();
-    public abstract void clearFiels();
+    public abstract void clearFields();
 
     protected void addLabeledFiled(JPanel panel, String labelText, Component field) {
         JLabel label = new JLabel(labelText);
