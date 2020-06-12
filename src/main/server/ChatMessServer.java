@@ -13,6 +13,7 @@ import org.xml.sax.SAXException;
 
 
 import javax.swing.*;
+import javax.swing.event.ListSelectionListener;
 import javax.xml.parsers.*;
 import java.awt.*;
 import java.io.*;
@@ -42,10 +43,10 @@ public class ChatMessServer extends JFrame {
     private static final ServerModel model;
     public static final int WIDTH = 800;
     public static final int HEIGHT = 600;
-    //private static final Controller CONTROLLER;
+    private static final ServerController controller;
     static {
         model = ServerModel.getInstance(); //синглтон
-        //CONTROLLER = Controller.getInstance();
+        controller = ServerController.getInstance();
 
         view = ServerPanelView.getInstance();
 
@@ -93,7 +94,7 @@ public class ChatMessServer extends JFrame {
         updMessages();
         
         fr.setVisible(true);
-        //fr.repaint();
+        fr.repaint();
 
         // Run thread with quit command handler
         quitCommandThread();
@@ -117,7 +118,7 @@ public class ChatMessServer extends JFrame {
                 }
             } catch (SocketTimeoutException e) {
             }
-            //updMessages();
+
         }
 
         // Write message into xml file
@@ -206,4 +207,7 @@ public class ChatMessServer extends JFrame {
     }
 
 
+    public ServerController getServerController() {
+        return controller;
+    }
 }

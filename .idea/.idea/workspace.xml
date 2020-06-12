@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="17cfa9af-a032-49b7-b564-f265d097b8f2" name="Default Changelist" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ProjectCodeStyleSettingsMigration">
+    <option name="version" value="1" />
+  </component>
+  <component name="ProjectId" id="1dDnkz4FZZjtx59EQ8Kvm7eKAKA" />
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+  </component>
+  <component name="SbtLocalSettings">
+    <option name="projectSyncType">
+      <map>
+        <entry key="$USER_HOME$" value="PREVIEW" />
+        <entry key="$USER_HOME$/Desktop/forcomp" value="PREVIEW" />
+        <entry key="$USER_HOME$/Desktop/funsets" value="PREVIEW" />
+        <entry key="$USER_HOME$/Desktop/objsets" value="PREVIEW" />
+        <entry key="$USER_HOME$/Desktop/patmat" value="PREVIEW" />
+        <entry key="$USER_HOME$/Desktop/progfun1-example/example" value="PREVIEW" />
+        <entry key="$USER_HOME$/Desktop/recfun (1)/recfun" value="PREVIEW" />
+        <entry key="$USER_HOME$/Desktop/recfun/recfun" value="PREVIEW" />
+        <entry key="$USER_HOME$/Desktop/scala/funsets/funsets" value="PREVIEW" />
+      </map>
+    </option>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="17cfa9af-a032-49b7-b564-f265d097b8f2" name="Default Changelist" comment="" />
+      <created>1591968678258</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1591968678258</updated>
+    </task>
+    <servers />
+  </component>
+</project>

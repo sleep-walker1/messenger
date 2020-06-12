@@ -16,23 +16,23 @@ public class ServerModel extends AbstractModel {
     public Set<Message> dialogMessages = new TreeSet<>();
 
 
-    private DefaultListModel<String> listMod = new DefaultListModel();
+    private DefaultListModel<String> listModel = new DefaultListModel();
     JList<String> userList = new JList<>();
 
-    //ListSelectionModel listSelectionModel = userList.getSelectionModel();
+    ListSelectionModel listSelectionModel = userList.getSelectionModel();
 
     public JList<String> getList() {
-        userList.setModel(listMod);
+        userList.setModel(listModel);
         return userList;
     }
     public DefaultListModel getModelList() {
-        return listMod;
+        return listModel;
     }
 
-    public void filterMessagesOfDialog() { //here
+    public void filterMessagesOfDialog() { //here todo
         int index = getList().getAnchorSelectionIndex();
         for (Message one : allMessages) {
-            if((one.getUserTo().equals(listMod.get(index))  || (one.getUserFrom().equals(listMod.get(index)))) ){
+            if(listModel.get(index).contains(one.getUserTo())  && listModel.get(index).contains(one.getUserFrom())  ) {
                 dialogMessages.add(one);
                 System.out.println("added");
             }
@@ -69,10 +69,6 @@ public class ServerModel extends AbstractModel {
 
         // UserList.addListSelectionListener(lis );
 
-        //lastMessageId = 0L;
-        //currentUser = "";
-        //loggedUser = "";
-        //usersStr ="";
         dialogMessages = new TreeSet<Message>();
         userList.setVisible(true);
 
@@ -91,37 +87,38 @@ public class ServerModel extends AbstractModel {
             String from =result.get(q).getUserFrom();
             String to = result.get(q).getUserTo();
             //System.out.println(from + ", " + to);
-            if( !(listMod.contains(from + ", " + to) || listMod.contains(to + ", " + from))) {
-                //listModel.addElement(from + ", " + to);
-                listMod.addElement(from );
-            }
+            if( !(listModel.contains(from + "<->" + to) || listModel.contains(to + "<->" + from))) {
+                listModel.addElement(from + "<->" + to);
 
+            }
         }
 
         getList();
         this.getAllMessages().addAll(result);
-        //System.out.println(getAllMessages());
-        //updList();
+
         Set set = new HashSet(result);
         parent.getServerPanel(false)
                 .modelChanged(msToString(set), getList().toString());
     }
-    public void updList(){
+   /* public void updList(){
     for (Message one : getAllMessages()) {
         /*
         if((one.getUserTo().equals(listModel.get(index))  || (one.getUserFrom().equals(listModel.get(index)))) ){
             dialogMessages.add(one);
             System.out.println("added");
-        }*/
+        }
         //listModel.addElement(one.getUserFrom() + ", " + one.getUserTo());
-        listMod.addElement(one.getUserFromMessage());
+        listModel.addElement(one.getUserFromMessage());
         System.out.println("+");
     }
-    System.out.println(listMod.size());
-    userList.setModel(listMod);
+    System.out.println(listModel.size());
+    userList.setModel(listModel);
     //System.out.println(userList);
-}
+}*/
 
+    public String dialogMessagesToString() {
+        return msToString(dialogMessages);
+    }
     public Set<Message> getAllMessages() {
         return allMessages;
     }
